@@ -3,6 +3,9 @@
 require "rubygems"
 require "monitor"
 
+$infoAbelha = []
+$infoUrso = []
+
 class Pote
   attr_accessor :mel
 
@@ -23,43 +26,55 @@ end
 class Monitor
   attr_reader :numAbelhas
 
-  entraUrso = ConditionVariable.new
-  entraAbelha = ConditionVariable.new
+  # renomeando nome de métodos do ruby para os nomes exigidos no EP
+  alias :signal_all() :broadcast()
+  alias :wait() :wait_until()
 
-  abelha_request
-    infoAbelha[i].estado = voando
-    entraAbelha.wait(numAbelhas < 100 && nenhumUrso && poteNaoCheio)
-    infoAbelha[i].estado = depositando
-    mel += 1
-    if MeioCheio
-      # se abelha->rodando é verdade, entao enchendo pote, else, esperando vaga
+  # new_cond é um método do monitor que cria a variável de condição
+  def initialize h
+    @pote = Pote.new(h)
+    @entraUrso =  new_cond
+    @entraAbelha = new_cond
+  end
+
+  def abelha_request
+
+    infoAbelha[i].estado = :voando     #
+    @entraAbelha.wait(numAbelhas < 100 && nenhumUrso && !@pote.cheio) #
+    infoAbelha[i].estado = :depositando #
+
+    @pote.mel += 1
+    if @pote.meio_cheio?
+      # se abelha->rodando é verdade, entao enchendo @pote, else, esperando vaga
       avisaMeioCheio
-    numAbelhas += 1
+    end
 
-  abelha_free
+    numAbelhas += 1
+  end
+
+  def abelha_free
+
     numAbelhas -= 1
-    if poteCheio && numAbelhas == 0
-      # se abelha->rodando é verdade, enchendo pote, else, esperando vaga
+    if @pote.cheio? && numAbelhas == 0
+      # se abelha->rodando é verdade, enchendo @pote, else, esperando vaga
       avisaCheio
       infoAbelha[i].ursosAcordados += 1
-      entraUrso.signal
-    else if poteNaoCheio
-      entraAbelha.signal
-    infoAbelha[i].estado = buscando mel
+      @entraUrso.signal
 
-  urso_request
-    entraUrso.wait()
+    elsif !@pote.cheio?
+      @entraAbelha.signal
+    end
+
+    infoAbelha[i].estado = :buscandoMel
+  end
+
+  def urso_request
+    @entraUrso.wait(true)
     ursoInfo[i].numVezesAcordado += 1  
+  end
 
-  urso_free
-    Mel = 0
-    entraAbelha.signal_all()
-end
-
-
-def wait mayProceed
-  mayProceed.true?
-  if self.locked?
-    self.unlock
+  def urso_free
+    @pote.mel = 0
+    @entraAbelha.signal_all()
   end
 end 
