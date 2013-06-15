@@ -52,7 +52,9 @@ class Monitor
     
     synchronize do
       infoAbelha[i].estado = :voando     #
-      @entraAbelha.wait(numAbelhas < 100 && nenhumUrso && !@pote.cheio) #
+      while !(numAbelhas < 100 && nenhumUrso && !@pote.cheio)
+        wait(@entraAbelha) #
+      end
       infoAbelha[i].estado = :depositando #
 
       @pote.mel += 1
@@ -71,12 +73,12 @@ class Monitor
       numAbelhas -= 1
       if @pote.cheio? && numAbelhas == 0
         # se abelha->rodando é verdade, enchendo @pote, else, esperando vaga
-      avisaCheio
+        avisaCheio
         infoAbelha[i].ursosAcordados += 1
-        @entraUrso.signal
+        signal(@entraUrso)
         
       elsif !@pote.cheio?
-        @entraAbelha.signal
+        signal(@entraAbelha)
       end
       
       infoAbelha[i].estado = :buscandoMel
@@ -86,7 +88,7 @@ class Monitor
   def urso_request
 
     synchronize do
-      @entraUrso.wait(true)
+      wait(@entraUrso)
       ursoInfo[i].numVezesAcordado += 1  
     end
   end
@@ -95,7 +97,7 @@ class Monitor
     
     synchronize do
       @pote.mel = 0
-      @entraAbelha.signal_all()
+      signal_all(@entraAbelha)
     end
   end 
 end
