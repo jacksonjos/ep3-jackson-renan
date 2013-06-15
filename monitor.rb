@@ -23,13 +23,24 @@ class Pote
 end
 
 
+def wait(condvar)
+  condvar.wait
+end
+
+def signal(condvar)
+  condvar.signal
+end
+
+def signal_all(condvar)
+  condvar.broadcast
+end
+
 class Monitor
   attr_reader :numAbelhas
 
   # renomeando nome de métodos do ruby para os nomes exigidos no EP
   alias :signal_all() :broadcast()
-  alias :wait() :wait_until()
-
+  
   # new_cond é um método do monitor que cria a variável de condição
   def initialize h
     @pote = Pote.new(h)
