@@ -23,6 +23,8 @@ class Pote
 end
 
 
+# renomeando nome de métodos do ruby para os nomes exigidos no EP
+
 def wait(condvar)
   condvar.wait
 end
@@ -38,8 +40,6 @@ end
 class Monitor
   attr_reader :numAbelhas
 
-  # renomeando nome de métodos do ruby para os nomes exigidos no EP
-  alias :signal_all() :broadcast()
   
   # new_cond é um método do monitor que cria a variável de condição
   def initialize h
@@ -49,43 +49,53 @@ class Monitor
   end
 
   def abelha_request
+    
+    synchronize do
+      infoAbelha[i].estado = :voando     #
+      @entraAbelha.wait(numAbelhas < 100 && nenhumUrso && !@pote.cheio) #
+      infoAbelha[i].estado = :depositando #
 
-    infoAbelha[i].estado = :voando     #
-    @entraAbelha.wait(numAbelhas < 100 && nenhumUrso && !@pote.cheio) #
-    infoAbelha[i].estado = :depositando #
-
-    @pote.mel += 1
-    if @pote.meio_cheio?
-      # se abelha->rodando é verdade, entao enchendo @pote, else, esperando vaga
-      avisaMeioCheio
+      @pote.mel += 1
+      if @pote.meio_cheio?
+        # se abelha->rodando é verdade, entao enchendo @pote, else, esperando vaga
+        avisaMeioCheio
+      end
+      
+      numAbelhas += 1
     end
-
-    numAbelhas += 1
   end
-
+  
   def abelha_free
-
-    numAbelhas -= 1
-    if @pote.cheio? && numAbelhas == 0
-      # se abelha->rodando é verdade, enchendo @pote, else, esperando vaga
+    
+    synchronize do
+      numAbelhas -= 1
+      if @pote.cheio? && numAbelhas == 0
+        # se abelha->rodando é verdade, enchendo @pote, else, esperando vaga
       avisaCheio
-      infoAbelha[i].ursosAcordados += 1
-      @entraUrso.signal
-
-    elsif !@pote.cheio?
-      @entraAbelha.signal
+        infoAbelha[i].ursosAcordados += 1
+        @entraUrso.signal
+        
+      elsif !@pote.cheio?
+        @entraAbelha.signal
+      end
+      
+      infoAbelha[i].estado = :buscandoMel
     end
-
-    infoAbelha[i].estado = :buscandoMel
   end
 
   def urso_request
-    @entraUrso.wait(true)
-    ursoInfo[i].numVezesAcordado += 1  
+
+    synchronize do
+      @entraUrso.wait(true)
+      ursoInfo[i].numVezesAcordado += 1  
+    end
   end
 
   def urso_free
-    @pote.mel = 0
-    @entraAbelha.signal_all()
-  end
-end 
+    
+    synchronize do
+      @pote.mel = 0
+      @entraAbelha.signal_all()
+    end
+  end 
+end
