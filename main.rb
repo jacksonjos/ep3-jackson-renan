@@ -19,7 +19,7 @@ threadsAbelha = []
 threadsUrso = []
 
 #Inicializa monitor
-monitor = Monitor.new(H)
+monitor = Monitor.new(H, N, B)
 
 # Inicializando N threads abelha e B threads urso
 
