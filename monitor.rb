@@ -63,6 +63,11 @@ class Pote < Monitor
     end
   end
 
+  def vai_encher? n
+    synchronize do
+      @mel + n >= @capacidadePote
+    end
+  end
 
   private
   def meio_cheio?
@@ -107,7 +112,7 @@ class ControladorAcesso < Monitor
     
     synchronize do
       $infoAbelha[i].estado = :voando     #
-      while !(@numAbelhas < 100 && @nenhumUrso && !@pote.cheio) #TODO: pode ser que uma abelha entre quando o tiver n abelhas enchendo o pote e h - n de mel no pote. Arrumar.
+      while !(@numAbelhas < 100 && @nenhumUrso && !@pote.vai_encher? @numAbelhas)
         wait(@entraAbelha) #
       end
       $infoAbelha[i].estado = :depositando #
