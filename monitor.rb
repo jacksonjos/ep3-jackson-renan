@@ -17,7 +17,7 @@ class InfoAbelha
     @numUrsosAcordados = 0
   end
 
-  def acordaUrso
+  def acorda_urso
     @numUrsosAcordados += 1
   end
 end
@@ -128,7 +128,7 @@ class ControladorAcesso < Monitor
       if @pote.cheio? && @numAbelhas == 0
         # se abelha->rodando é verdade, enchendo @pote, else, esperando vaga
         avisaCheio
-        $infoAbelha[i].acordaUrso
+        $infoAbelha[i].acorda_urso
         signal(@entraUrso)
         
       elsif !@pote.cheio?
