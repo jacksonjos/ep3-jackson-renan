@@ -1,38 +1,57 @@
+require 'rubygems'
+require 'time'
+require 'priority_queue'
+
+# Neste EP cada unidade de tempo t gasta pelas das threads para realizar
+# as tarefas que lhes cabem equivale a um segundo
+
+# A bilbioteca (gem) priority queue é uma simples fila de prioridades
+# que implementa uma fila em que os objetos são ordenados com prioridades
+# crescentes. No caso a prioridade consiste de valores crescentes.
+
+# O método to_i devolve o valor inteiro de uma variável/objeto.
 
 class TimeManager
   
-  skippedTime = 0
-  pq = PriorityQueue.new
+  @skippedTime = 0
+  @pq = PriorityQueue.new
 
   def init
-    startTime = curSystemTime
+    # Time.new inicializa uma variável com o tempo corrente
+    @startTime = Time.new
+    # Como a unidade de tempo implementada foi de 1 segundo o sleep é implementado
+    # para que a thread faça a checagem da fila uma vez por segundo. Afinal, quando
+    # há diferença entre a prioridade (tempo) entre os objetos ela será medida entre
+    # segundos.
     Thread.new{
-      sleep(dt)
-      while pq.minRank <= curTime
-        wake pq.remove
+
+      sleep(1)
+      while @pq.min_priority <= Time.now
+        wake @pq.pop
       end
     }
   end
   
   def skipAteEvento
-    skipTime pq.minRank - curTime
+    skipTime @pq.min_priority - Time.now
   end
 
-  def adicionaEvento t, rank
-    pq.adiciona t, rank
+  def adicionaEvento t, priority
+    @pq.push t, t.to_i
   end
 
   def curTime
-    return curSystemTime - startTime + skippedTime
+    currentTime = Time.new - @startTime + @skippedTime
+    return currentTime
   end
   
   def skipTime t
-    skippedTime += t
+    @skippedTime += t
   end
   
   def encerra
-    while !pq.empty
-      wake pq.remove
+    while !@pq.empty?
+      wake @pq.pop
     end
     #mata a thread que ele cria?
   end

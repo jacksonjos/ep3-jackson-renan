@@ -1,0 +1,2 @@
+# Em Ruby todo método retorna algo. Assim, quando temos um método sem a declaração do comando return
+o método retorna a última declaração feita dentro dele.   
