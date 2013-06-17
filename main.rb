@@ -23,8 +23,8 @@ $gerenciadorTempo = TimeManager.new(N)
 $pote = Pote.new(H)
 # Inicializando N threads abelha e B threads urso
 
-1..N.each{
-  threadsAbelha << Thread.new {abelha = Abelha.new(t) abelha.trabalhe}
+1..N.each{ |id|
+  threadsAbelha << Thread.new {abelha = Abelha.new(t, id) abelha.trabalhe}
 }
 
 1..B.each{
