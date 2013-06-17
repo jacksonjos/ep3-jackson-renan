@@ -14,8 +14,9 @@ require 'timemanager.rb'
 # presentes nele  
 class Urso
 
-  def initialize T
+  def initialize T, id
     @T = T
+    @id = id
   end
 
   def durma_e_coma
