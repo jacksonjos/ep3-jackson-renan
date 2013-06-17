@@ -46,7 +46,7 @@ class Pote < Monitor
       @mel += 1
       if @pote.meio_cheio?
         # se abelha->rodando é verdade, entao enchendo @pote, else, esperando vaga
-        avisaMeioCheio
+        avisaMeioCheio # Falta implementar
       end
     end
   end
@@ -127,7 +127,7 @@ class ControladorAcesso < Monitor
       @numAbelhas -= 1
       if @pote.cheio? && @numAbelhas == 0
         # se abelha->rodando é verdade, enchendo @pote, else, esperando vaga
-        avisaCheio
+        avisaMeioCheio # Falta implementar
         $infoAbelha[i].acorda_urso
         signal(@entraUrso)
         
