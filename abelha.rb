@@ -26,7 +26,7 @@ class Abelha
   end
 
   def trabalhe
-    while true #TODO: definir condição de parada
+    while $gerenciadorTempo.current_time <= 600
       $monitor.abelha_request @id
       sleep 1
       $pote.adiciona_mel

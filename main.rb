@@ -22,12 +22,10 @@ threadsUrso = []
 $abelhas = []
 $ursos = []
 
-pog = []
 
 # Inicializa monitor que controla o acesso de urso e abelhas ao pote
 $monitor = ControladorAcesso.new
 $gerenciadorTempo = TimeManager.new
-$gerenciadorTempo.init N
 $pote = Pote.new
 $pote.init(H)
 
@@ -35,25 +33,29 @@ $pote.init(H)
 
 for id in 0..N-1
   
-  pog << id
-  $abelhas[id] = Abelha.new(t, pog[id])
+  $abelhas[id] = Abelha.new(t, id)
+  #Gambiarra para rodar o objeto certo
   tmpThread = Thread.new{
-    threadsAbelha << Thread.new {$abelhas[pog[id]].trabalhe}
+    threadsAbelha << Thread.new {$abelhas[id].trabalhe}
   }
   tmpThread.join
 end
-
-pog = []
 
 for id in 0..B-1
-  pog << id
   $ursos[id] =  Urso.new(T, id)
   tmpThread = Thread.new{
-    threadsUrso << Thread.new {$ursos[pog[id]].durma_e_coma}
+    threadsUrso << Thread.new {$ursos[id].durma_e_coma}
   }
   tmpThread.join
 end
 
+
+#Se nao tem threads ativas, o ruby acha que entrou em deadlock
+pogThread = Thread.new{
+  while true
+    pog = 1
+  end
+}
 
 # O método join garante que o script finaliza apenas quando a execução
 # de todas as threads na lista thr é encerrada 

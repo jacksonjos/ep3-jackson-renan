@@ -4,12 +4,8 @@ require "rubygems"
 require "monitor"
 require "./graphics.rb"
 
-# require "./main.rb"
-
 class Pote < Monitor
-  
- # include MonitorMixin
-  
+    
   def initialize # h
     #@capacidadePote = h
     @numAbelhas = 0
@@ -37,7 +33,6 @@ class Pote < Monitor
   def adiciona_mel
     synchronize do
       @mel += 1
-      print "mais mel! #{@mel}\n"
       # Self se refere ao próprio objeto da classe instanciado
       if self.meio_cheio?
         # se abelha->rodando é verdade, então enchendo @pote, else, esperando vaga
@@ -64,15 +59,11 @@ class Pote < Monitor
 
   def pronto?
     synchronize do
-      if @mel == @capacidadePote
-        print "cheio, #{@numAbelhas} abelhas no pote\n"
-       # print "\n\n   PRONTO !!!! \n\n"
-      #  evento_especial "Pote cheio:"
+      if @mel >= @capacidadePote && @numAbelhas == 0
+        evento_especial "Pote Cheio:"
       end
-      @mel >= @capacidadePote && @numAbelhas == 0
     end
   end
-
   def pode_entrar?
     synchronize do
       @numAbelhas < 100 && @numAbelhas + @mel < @capacidadePote
@@ -80,9 +71,6 @@ class Pote < Monitor
   end
 
   def evento_especial tipo_de_evento
-  end
-  
-  def nada
     somaNumVezesAbelhaAcordouUrsos = 0
     somaNumVezesUrsosComeram = 0
     puts tipo_de_evento
@@ -93,13 +81,14 @@ class Pote < Monitor
     $ursos.each {|urso| print "#{urso.numVezesAcordado}\n"
                   somaNumVezesUrsosComeram += urso.numVezesAcordado}
     $mediaVezesUrsosComeram  << (somaNumVezesUrsosComeram / $ursos.length).to_f
-    $tempo << $gerenciadorTempo.current_time - $gerenciadorTempo.startTime 
+    $tempo << $gerenciadorTempo.current_time.to_i - $gerenciadorTempo.startTime.to_i 
     print "\n\n"
   end
 
-  #private
   def meio_cheio?
-    @mel == (@capacidadePote / 2).floor
+    if @mel == (@capacidadePote / 2).floor
+      evento_especial "Pote Meio Cheio:"
+    end
   end
 
 end
