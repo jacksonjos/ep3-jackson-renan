@@ -21,7 +21,7 @@ $abelhas = []
 $ursos = []
 
 # Inicializa monitor que controla o acesso de urso e abelhas ao pote
-$monitor = ControladorAcesso.new(N, B)
+$monitor = ControladorAcesso.new
 $gerenciadorTempo = TimeManager.new(N)
 $pote = Pote.new(H)
 # Inicializando N threads abelha e B threads urso
