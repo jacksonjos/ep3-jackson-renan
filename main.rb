@@ -11,10 +11,15 @@ require "./timemanager.rb"
 # Argumentos passados pela linha de comando
 
 N = ARGV[0].to_i
+print "N = #{N}\n"
 B = ARGV[1].to_i
+print "B = #{B}\n"
 H = ARGV[2].to_i
+print "H = #{H}\n"
 t = ARGV[3].to_i
+print "t = #{t}\n"
 T = ARGV[4].to_i
+print "T = #{T}\n"
 
 threadsAbelha = []
 threadsUrso = []
@@ -28,12 +33,12 @@ $gerenciadorTempo = TimeManager.new(N)
 $pote = Pote.new(H)
 # Inicializando N threads abelha e B threads urso
 
-for id in 1..N
+for id in 0..N-1
   $abelhas << Abelha.new(t, id)
   threadsAbelha << Thread.new {$abelhas[id].trabalhe}
 end
 
-for id in 1..B
+for id in 0..B-1
   $ursos << Urso.new(T, id)
   threadsUrso << Thread.new {$ursos[id].durma_e_coma}
 end

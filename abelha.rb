@@ -22,7 +22,7 @@ class Abelha
   def initialize t, id
     @t = t
     @id = id
-    @numUrsosAcordados += 1
+    @numUrsosAcordados = 0
   end
 
   def trabalhe

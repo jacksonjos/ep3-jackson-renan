@@ -24,6 +24,7 @@ class Urso
 
   def durma_e_coma
     while true #TODO: definir condição de parada
+      print "Urso here"
       $monitor.urso_request
       @numVezesAcordado += 1
       $gerenciadorTempo.espera_urso (@T/2).floor

@@ -10,8 +10,6 @@ class ControladorAcesso < Monitor
   
   # new_cond é um método do monitor que cria a variável de condição
   def initialize 
-    # Número de abelhas depositando mel no pote
-    @numAbelhas = 0
     # Boolean que é usado para saber se há um urco comendo o mel do pote ou não
     @nenhumUrso = true
     # Variáveis de condição

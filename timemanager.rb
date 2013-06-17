@@ -26,15 +26,21 @@ class TimeManager < Monitor
   @pq = PriorityQueue.new
   @numAbelhas = 0
 
-  @signalAbelhas = []
+  
 
   # Inicializa contagem do
   def initialize n
     # Time.new inicializa uma variável com o tempo corrente
     @startTime = Time.new
-
+    @signalAbelhas = []
     for i in 1..n
-      @signalAbelhas << new_cond
+      tmpcond = new_cond
+      if tmpcond == nil
+        print "hurr\n"
+      else
+        print "durr\n"
+      end
+      @signalAbelhas << tmpcond
     end
     
     # Como a unidade de tempo implementada foi de 1 segundo o sleep é implementado
