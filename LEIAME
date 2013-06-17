@@ -1,2 +1,46 @@
-# Em Ruby todo método retorna algo. Assim, quando temos um método sem a declaração do comando return
-o método retorna a última declaração feita dentro dele.   
+-----------------------------------------------------------------------------------------------------
+Sobre a instalação do interpretador e bibliotecas (gems) da linguagem ruby
+
+Para instalar ruby na máquina é possível instalar a rvm do ruby
+Ela instala o compilador da linguagem e o gerenciador de pacotes rubygems
+Para mais instruções veja:
+http://www.ruby-lang.org/en/downloads/
+Como usar a rvm
+http://sirupsen.com/get-started-right-with-rvm/
+
+A versão utilizada da linguagem ruby é ruby-2.0.0-p195, e a rubygems é rubygems-2.0.3
+Por precaução o melhor é instalar as mesmas versões das gems que foram usadas no EP.
+
+Para isso é necessário instalar o bundler http://gembundler.com/
+Depois de instalado execute o comando 'bundle install' que serão instaladas as versões
+das bibliotecas que estão no arquivo Gemfile.
+
+
+-------------------------------------------------------------------------------------------------------
+Sobre a linguagem:
+
+Em Ruby todo método retorna algo. Assim, quando temos um método sem a declaração do comando
+return o método retorna a última declaração de variável feita dentro dele.   
+Além disso em ruby tudo é um objeto e é possível saber quais métodos cada objeto possui abrindo o irb
+(interpretador do ruby) digitando 'irb' na linha de comando. Aí basta digitar ClasseX.methods ou
+var.methods sendo que var é um objeto previamente criado. Vale lembrar que para criar um objeto não é
+necessário digitar 'obj = ClasseX.new'. Para objetos de determinadas classes basta digitar obj = 5 ou
+obj = "string" para objetos/variáveis do tipo bignum e string, por exemplo.
+Métodos que terminam com '?' retornam um valor booleano, pois o ponto de interrogação significa que
+queremos saber se a resposta do método é sim ou não (verdade ou falso).
+
+Todas as classes possuem o método initialize, pois ele é chamada quando é instanciado um novo objeto de
+qualquer classe com eventuais argumentos e inicializa as variáveis de instância da classe entre outros
+objetos.
+
+Quaisquer dúvidas sobre o uso do irb ou da linguagem basta enviar um e-mail para jackson@ime.usp.br
+
+-------------------------------------------------------------------------------------------------------
+Sobre o programa
+
+As classes, métodos e variáveis do programa forma escritos de forma a proporcionar maior clareza
+ao código de forma a evitar o uso de muitos comentários.
+Dessa forma vários métodos não terão comentários, pois parte-se da suposição de que seus respectivos
+nomes são autoexplicativos.
+
+Para rodar o programa basta estar executar o arquivo main.rb na pasta em que ele estiver presente

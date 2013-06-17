@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 
+require 'rubygems'
 require "monitor"
 
 class Monitor
-# renomeando nome de métodos do ruby para os nomes exigidos no EP
+    # renomeando nome de métodos do ruby para os nomes exigidos no EP
 
   def wait(condvar)
     condvar.wait

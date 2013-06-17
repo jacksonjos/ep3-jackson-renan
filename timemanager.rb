@@ -16,7 +16,8 @@ class TimeManager
   @skippedTime = 0
   @pq = PriorityQueue.new
 
-  def init
+  # Inicializa contagem do
+  def initialize
     # Time.new inicializa uma variável com o tempo corrente
     @startTime = Time.new
     # Como a unidade de tempo implementada foi de 1 segundo o sleep é implementado

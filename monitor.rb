@@ -1,18 +1,24 @@
 # encoding: utf-8
 
 require "rubygems"
-require "monitor"
-
 require "monitoraliases.rb"
 
 # Arrays com informações sobre abelhas e ursos.
-# Os arrays abaixo são inicializados dentro do monitor e são do
+# Os arrays abaixo são globais, inicializados dentro do monitor e são do
 # tipo das classes de mesmo nome que estão logo abaixo
 $infoAbelha = []
 $infoUrso = []
 
 
 class InfoAbelha
+  # áttr_accessor é um método do ruby que cria métodos setter e getter
+  # pras variáveis que são escritas logo depois dele antes de ':'.
+  # Assim, quando se quiser manipular a variável estado de um objeto
+  # 'InfoAbelha' basta fazer infoAbelha.estado = estado sendo infoAbelha
+  # um objeto do tipo InfoAbelha. No caso abaixo as variáveis definidas
+  # como attr_accessor são variáveis de instância, ou seja, :estado é 
+  # interpretado como @estado dentro de InfoAbelha que é como se define
+  # uma variável de instância.
   attr_accessor :estado
 
   def initialize
@@ -37,12 +43,16 @@ end
 
 
 class Pote < Monitor
+  # Aqui vale o mesmo que foi explicado para o método accessor com a diferença
+  # de que é criado apenas um método getter para @mel. Assim é possível saber o
+  # número de mel executando pote.mel sendo que pote é um objeto da classe Pote.
   attr_reader :mel
 
   def initialize h
     @capacidadePote = h
   end
 
+  # Método que executa a adição de uma porção de mel por uma dada abelha
   def adiciona_mel
     synchronize do
       @mel += 1
@@ -86,8 +96,11 @@ class ControladorAcesso < Monitor
     N.times {$infoAbelha << InfoAbelha.new}
     B.times {$infoUrso << InfoUrso.new}
     @pote = Pote.new(h)
+    # Número de abelhas depositando mel no pote
     @numAbelhas = 0
+    # Boolean que é usado para saber se há um urco comendo o mel do pote ou não
     @nenhumUrso = true
+    # Variáveis de condição
     @entraUrso =  new_cond
     @entraAbelha = new_cond
   end
@@ -95,11 +108,11 @@ class ControladorAcesso < Monitor
   def abelha_request
     
     synchronize do
-      $infoAbelha[i].estado = :voando     #
+      $infoAbelha[i].estado = :voando
       while !(@numAbelhas < 100 && @nenhumUrso && !@pote.vai_encher? @numAbelhas)
         wait(@entraAbelha) #
       end
-      $infoAbelha[i].estado = :depositando #
+      $infoAbelha[i].estado = :depositando
       
       @numAbelhas += 1
     end
@@ -123,6 +136,7 @@ class ControladorAcesso < Monitor
     end
   end
 
+  # Thread urso recebe permissão para executar (comer mel do pote)
   def urso_request
 
     synchronize do
@@ -131,6 +145,8 @@ class ControladorAcesso < Monitor
     end
   end
 
+  # Thread urso avisa as threads abelha que elas podem voltar a executar
+  # (encher o pote)
   def urso_free
     
     synchronize do
