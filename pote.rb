@@ -5,12 +5,19 @@ require "monitor"
 
 # require "./main.rb"
 
-class Pote < Monitor
-
-  def initialize h
-    @capacidadePote = h
+class Pote 
+  
+  include MonitorMixin
+  
+  def initialize # h
+    #@capacidadePote = h
     @numAbelhas = 0
     @mel = 0
+    super
+  end
+  
+  def init h
+    @capacidadePote = h
   end
 
   def insere_abelha

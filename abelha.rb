@@ -31,8 +31,8 @@ class Abelha
       if $monitor.nil?
         print "pera, isso nao era pra ser nil\n"
       end
-      $monitor.abelha_request
-      $gerenciadorTempo.espera_abelha id, t
+      $monitor.abelha_request @id
+      $gerenciadorTempo.espera_abelha @id, @t
       $pote.adiciona_mel
       $monitor.abelha_free
     end

@@ -18,6 +18,7 @@ class ControladorAcesso #  < Monitor
     # Variáveis de condição
     @entraUrso =  new_cond
     @entraAbelha = new_cond
+    super
   end
 
   def abelha_request

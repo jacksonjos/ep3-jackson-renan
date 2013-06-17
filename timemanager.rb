@@ -20,35 +20,33 @@ require './pote.rb'
 
 # O método to_i devolve o valor inteiro de uma variável/objeto.
 
-class TimeManager < Monitor
+class TimeManager 
   
   @skippedTime = 0
   @pq = PriorityQueue.new
   @numAbelhas = 0
-
   
-
+  include MonitorMixin
+  
   # Inicializa contagem do
-  def initialize n
+  def initialize 
     # Time.new inicializa uma variável com o tempo corrente
     @startTime = Time.new
     @signalAbelhas = []
+    super
+  end
+  
+  def init n
     for i in 1..n
-      tmpcond = new_cond
-      if tmpcond == nil
-        print "hurr\n"
-      else
-        print "durr\n"
-      end
-      @signalAbelhas << tmpcond
+      @signalAbelhas << new_cond
     end
-    
-    # Como a unidade de tempo implementada foi de 1 segundo o sleep é implementado
-    # para que a thread faça a checagem da fila uma vez por segundo. Afinal, quando
-    # há diferença entre a prioridade (tempo) entre os objetos ela será medida entre
-    # segundos.
     @manager = Thread.new{
-
+      
+      # Como a unidade de tempo implementada foi de 1 segundo o sleep é implementado
+      # para que a thread faça a checagem da fila uma vez por segundo. Afinal, quando
+      # há diferença entre a prioridade (tempo) entre os objetos ela será medida entre
+      # segundos.
+      
       while true
         sleep(1)
         synchronize do
@@ -58,17 +56,22 @@ class TimeManager < Monitor
         end
       end
     }
+    
   end
+  
+    
     
   # Retorna o tempo simbólico atual
   def current_time
-    currentTime = Time.now - @startTime + @skippedTime
+    currentTime = Time.now.to_i - @startTime.to_i + @skippedTime.to_i
     return currentTime
   end
   
   def espera_abelha id, t
     synchronize do
-      @numAbelhas += 1
+      if @signalAbelhas[id].nil?
+        print "wat\n"
+      end
       adiciona_evento @signalAbelhas[id], current_time + t
       if !$pote.pode_entrar?
         skip_ate_evento
