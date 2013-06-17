@@ -27,7 +27,7 @@ class Urso
       $monitor.urso_request
       @numVezesAcordado += 1
       $gerenciadorTempo.espera_urso (@T/2).floor
-      #anuncia meio pote
+      $pote.evento_especial "Pote na metade enquanto urso está comendo:"
       $gerenciadorTempo.espera_urso (@T/2).ceil #caso T impar nao ferrar
       $pote.esvazia_pote
       $monitor.urso_free

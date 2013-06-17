@@ -2,23 +2,46 @@
 
 require 'rubygems'
 require 'gnuplot'
-require ''        # Arquivo onde ficam os vetores globais
 
-#Exemplo de gráfico que serve para o nosso problema
+# Execução de comando no shell
+`mkdir graficos`
+
+$mediaVezesAbelhasAcordaramUrsos = []
+$mediaVezesUrsosComeram = []
+$tempo = []
 
 Gnuplot.open do |gp|
   Gnuplot::Plot.new( gp ) do |plot|
   
-    plot.title  "Array Plot Example"
-    plot.xlabel "x"
-    plot.ylabel "x^2"
+    plot.title  "Atividade dos ursos"
+    plot.output "atividade-dos-ursos"
+    plot.terminal 'png'
+    plot.xlabel "tempo (s)"
+    plot.ylabel "Número médio de vezes que cada urso comeu"
     
-    x = (0..50).collect { |v| v.to_f }
-    y = x.collect { |v| v ** 2 }
 
-    plot.data << Gnuplot::DataSet.new( [x, y] ) do |ds|
+    plot.data << Gnuplot::DataSet.new( [$tempo, $mediaVezesUrsosComeram] ) do |ds|
       ds.with = "linespoints"
       ds.notitle
     end
   end
 end
+
+Gnuplot.open do |gp|
+  Gnuplot::Plot.new( gp ) do |plot|
+  
+    plot.title  "Atividade das abelhas"
+    plot.output "atividade-das-abelhas"
+    plot.terminal 'png'
+    plot.xlabel "tempo (s)"
+    plot.ylabel "Número médio de vezes que cada abelha acordou um urso"
+    
+
+    plot.data << Gnuplot::DataSet.new( [$tempo, $mediaVezesAbelhasAcordaramUrsos] ) do |ds|
+      ds.with = "linespoints"
+      ds.notitle
+    end
+  end
+end
+
+`mv *png graficos`

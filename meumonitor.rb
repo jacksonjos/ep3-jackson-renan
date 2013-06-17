@@ -29,9 +29,11 @@ class ControladorAcesso   < Monitor
       
       $abelhas[i].estado = :voando_esperando_espaco_para_depositar_mel
       while !(@nenhumUrso && $pote.pode_entrar?)
+       
         if !@nenhumUrso
           $abelhas[i].estado = :parada_esperando_urso_comer_mel
         end
+        
         wait(@entraAbelha) #
       end
       $abelhas[i].estado = :depositando_mel_no_pote
