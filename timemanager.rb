@@ -52,9 +52,12 @@ class TimeManager  < Monitor
         print "ohai\n"
         synchronize do
           print "synchronize do ohai\n"
-          while @pq.min_priority <= current_time
+          while !@pq.empty && @pq.min_priority <= current_time
             print "dentro do while do ohai\n"
-            signal @pq.pop
+            condvar = @pq.pop
+            print "condvar popado\n"
+            signal condvar
+            print "sinalizado!\n"
           end
           print "saindo sync do ohai\n"
         end

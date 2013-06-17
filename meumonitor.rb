@@ -22,7 +22,11 @@ class ControladorAcesso   < Monitor
   end
 
   def abelha_request i
+    print "Abelha #{i} fazendo request, entrando no monitor\n"
+    
     synchronize do
+      print "Abelha #{i} fazendo request, dentro do monitor\n"
+      
       $abelhas[i].estado = :voando_esperando_espaco_para_depositar_mel
       while !(@nenhumUrso && $pote.pode_entrar?)
         if !@nenhumUrso

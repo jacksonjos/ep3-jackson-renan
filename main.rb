@@ -36,8 +36,11 @@ $pote.init(H)
 # Inicializando N threads abelha e B threads urso
 
 for id in 0..N-1
-  $abelhas[id] =  Abelha.new(t, id)
+  print "Criar abelha #{id}\n"
+  $abelhas[id] = Abelha.new(t, id)
+  print "Abelha #{id} criada, mandar rodar\n"
   threadsAbelha << Thread.new {$abelhas[id].trabalhe}
+  print "Abelha #{id} rodando\n"
 end
 
 for id in 0..B-1

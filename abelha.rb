@@ -30,7 +30,9 @@ class Abelha
     while true #TODO: definir condição de parada
       print "Abelha #{@id} vai pedir pra entrar\n"
       $monitor.abelha_request @id
+      print "Abelha #{@id} vai enrolar agora\n"
       $gerenciadorTempo.espera_abelha @id, @t
+      print "Abelha #{@id} vai adicionar mel finalmente\n"
       $pote.adiciona_mel
       $monitor.abelha_free
     end
