@@ -17,11 +17,13 @@ class Urso
   def initialize T, id
     @T = T
     @id = id
+    @numVezesAcordado = 0
   end
 
   def durma_e_coma
     while true #TODO: definir condição de parada
       $monitor.urso_request
+      @numVezesAcordado += 1
       $monitor.espera_urso (@T/2).floor
       #anuncia meio pote
       $gerenciadorTempo.espera (@T/2).ceil #caso T impar nao ferrar
