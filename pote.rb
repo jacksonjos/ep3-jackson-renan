@@ -8,17 +8,12 @@ require "./graphics.rb"
 
 class Pote < Monitor
   
- # include MonitorMixin
   
-  def initialize # h
-    #@capacidadePote = h
+  def initialize h
+    @capacidadePote = h
     @numAbelhas = 0
     @mel = 0
     super
-  end
-  
-  def init h
-    @capacidadePote = h
   end
 
   def insere_abelha
@@ -56,18 +51,20 @@ class Pote < Monitor
   def cheio?
     synchronize do
       if @mel >= @capacidadePote
-       # evento_especial "Pote cheio:"
+        evento_especial "Pote cheio:"
         return true
       end
     end
   end
 
+  # Método que avisa se já é possível liberar o pote para o urso comer o mel
+  # e que executa um evento especial como definido no enunciado do EP
   def pronto?
     synchronize do
       if @mel == @capacidadePote
         print "cheio, #{@numAbelhas} abelhas no pote\n"
        # print "\n\n   PRONTO !!!! \n\n"
-      #  evento_especial "Pote cheio:"
+        evento_especial "Pote cheio:"
       end
       @mel >= @capacidadePote && @numAbelhas == 0
     end
@@ -79,13 +76,12 @@ class Pote < Monitor
     end
   end
 
+  # O método executa um evento especial como definido no EP e armazena nos vetores apropriados
+  # os valores necessários para produzir os gráficos pedidos no enunciado do EP
   def evento_especial tipo_de_evento
-  end
-  
-  def nada
     somaNumVezesAbelhaAcordouUrsos = 0
     somaNumVezesUrsosComeram = 0
-    puts tipo_de_evento
+    print "#{tipo_de_evento}\n"
     $abelhas.each {|abelha| print "#{abelha.estado}\n"}
     $abelhas.each {|abelha| print "#{abelha.numUrsosAcordados}\n"
                   somaNumVezesAbelhaAcordouUrsos += abelha.numUrsosAcordados}
@@ -97,7 +93,7 @@ class Pote < Monitor
     print "\n\n"
   end
 
-  #private
+
   def meio_cheio?
     @mel == (@capacidadePote / 2).floor
   end
