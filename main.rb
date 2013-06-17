@@ -17,6 +17,9 @@ T = ARGV[4].to_i
 threadsAbelha = []
 threadsUrso = []
 
+$abelhas = []
+$ursos = []
+
 # Inicializa monitor que controla o acesso de urso e abelhas ao pote
 $monitor = ControladorAcesso.new(N, B)
 $gerenciadorTempo = TimeManager.new(N)
@@ -24,11 +27,13 @@ $pote = Pote.new(H)
 # Inicializando N threads abelha e B threads urso
 
 1..N.each{ |id|
-  threadsAbelha << Thread.new {abelha = Abelha.new(t, id) abelha.trabalhe}
+  $abelhas << Abelha.new(t, id)
+  threadsAbelha << Thread.new {$abelhas[id].trabalhe}
 }
 
-1..B.each{
-  threadsUrso << Thread.new {urso = Urso.new(T) urso.durma_e_coma}
+1..B.each{ |id|
+  $ursos << Urso.new(T, id)
+  threadsUrso << Thread.new {urso = $ursos[id].durma_e_coma}
 }
 
 # O método join garante que o script finaliza apenas quando a execução
