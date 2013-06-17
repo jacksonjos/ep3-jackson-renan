@@ -92,10 +92,10 @@ class ControladorAcesso < Monitor
   
   # new_cond é um método do monitor que cria a variável de condição
   # São geradas N e B objetos de informações sobre abelhas e ursos respectivamente
-  def initialize h, N, B
+  def initialize N, B
     N.times {$infoAbelha << InfoAbelha.new}
     B.times {$infoUrso << InfoUrso.new}
-    @pote = Pote.new(h)
+    # $pote = Pote.new(h)
     # Número de abelhas depositando mel no pote
     @numAbelhas = 0
     # Boolean que é usado para saber se há um urco comendo o mel do pote ou não
@@ -122,13 +122,13 @@ class ControladorAcesso < Monitor
     
     synchronize do
       @numAbelhas -= 1
-      if @pote.cheio? && @numAbelhas == 0
+      if $pote.cheio? && @numAbelhas == 0
         # se abelha->rodando é verdade, enchendo @pote, else, esperando vaga
         avisaMeioCheio # Falta implementar
         $infoAbelha[i].acorda_urso
         signal(@entraUrso)
         
-      elsif !@pote.cheio?
+      elsif !$pote.cheio?
         signal(@entraAbelha)
       end
       
