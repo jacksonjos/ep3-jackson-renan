@@ -24,13 +24,16 @@ class Urso
 
   def durma_e_coma
     while $gerenciadorTempo.current_time <= 600
+      print "urso #{@id} #{object_id} pede pote\n"
       $monitor.urso_request
+      print "urso #{@id} tem o pote\n"
       @numVezesAcordado += 1
       $gerenciadorTempo.espera_urso (@T/2).floor
       $pote.evento_especial "Pote Meio Vazio:"
       $gerenciadorTempo.espera_urso (@T/2).ceil #caso T impar nao ferrar
       $pote.esvazia_pote
       $monitor.urso_free
+      print "urso #{@id} liberou o pote\n"
     end
   end
 

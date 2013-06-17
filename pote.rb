@@ -10,7 +10,7 @@ class Pote < Monitor
     @capacidadePote = h
     @numAbelhas = 0
     @mel = 0
-    super
+    super()
   end
 
   def insere_abelha
@@ -29,11 +29,13 @@ class Pote < Monitor
   def adiciona_mel
     synchronize do
       @mel += 1
+      print "more mel, #{@mel}\n"
       # Self se refere ao próprio objeto da classe instanciado
       if self.meio_cheio?
         # se abelha->rodando é verdade, então enchendo @pote, else, esperando vaga
         # evento_especial "Pote na metade enquanto as abelhas estão enchendo:" # Falta implementar
       end
+  #    @numAbelhas -= 1
     end
   end
 
@@ -47,7 +49,9 @@ class Pote < Monitor
   def cheio?
     synchronize do
       if @mel >= @capacidadePote
-        evento_especial "Pote cheio:"
+
+        print "cheio, mel: #{@mel}, #{@numAbelhas}\n"
+#        evento_especial "Pote cheio:"
         return true
       end
     end
@@ -59,19 +63,30 @@ class Pote < Monitor
     synchronize do
       if @mel >= @capacidadePote && @numAbelhas == 0
         evento_especial "Pote Cheio:"
+        return true
       end
     end
   end
 
   def pode_entrar?
     synchronize do
-      @numAbelhas < 100 && @numAbelhas + @mel < @capacidadePote
+      print "pode entrar? #{@mel} #{@numAbelhas} #{@numAbelhas + @mel} #{@capacidadePote}\n"
+      if @numAbelhas < 100 && @numAbelhas + @mel < @capacidadePote
+        print "foi\n"
+        return true
+      else
+        print "nope\n"
+      end
     end
   end
-
+  
   # O método executa um evento especial como definido no EP e armazena nos vetores apropriados
   # os valores necessários para produzir os gráficos pedidos no enunciado do EP
   def evento_especial tipo_de_evento
+    print "EVENTO ESPECIAL NEGADIS #{tipo_de_evento}\n"
+  end
+  
+  def nada
     somaNumVezesAbelhaAcordouUrsos = 0
     somaNumVezesUrsosComeram = 0
     print "#{tipo_de_evento}\n"

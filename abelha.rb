@@ -27,8 +27,10 @@ class Abelha
 
   def trabalhe
     while $gerenciadorTempo.current_time <= 600
+#      print "abelha #{@id} vai pedir o pote\n"
       $monitor.abelha_request @id
       sleep @t
+      print "abelha #{@id} vai adicionar mel!\n"
       $pote.adiciona_mel
       $monitor.abelha_free @id
     end
