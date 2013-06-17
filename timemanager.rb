@@ -4,6 +4,7 @@ require 'time'
 require 'priority_queue'
 
 require 'monitoraliases.rb'
+require 'pote.rb'
 
 # Neste EP cada unidade de tempo t gasta pelas das threads para realizar
 # as tarefas que lhes cabem equivale a um segundo.
@@ -31,10 +32,6 @@ class TimeManager < Monitor
   def initialize N
     # Time.new inicializa uma variável com o tempo corrente
     @startTime = Time.new
-    # Como a unidade de tempo implementada foi de 1 segundo o sleep é implementado
-    # para que a thread faça a checagem da fila uma vez por segundo. Afinal, quando
-    # há diferença entre a prioridade (tempo) entre os objetos ela será medida entre
-    # segundos.
 
     1..N.each{
       @signalAbelhas << new_cond
@@ -42,6 +39,10 @@ class TimeManager < Monitor
     
     @totalAbelhas = N
 
+    # Como a unidade de tempo implementada foi de 1 segundo o sleep é implementado
+    # para que a thread faça a checagem da fila uma vez por segundo. Afinal, quando
+    # há diferença entre a prioridade (tempo) entre os objetos ela será medida entre
+    # segundos.
     @manager = Thread.new{
 
       while true
@@ -53,7 +54,7 @@ class TimeManager < Monitor
         end
       end
     }
-    end
+  end
     
   # Retorna o tempo simbólico atual
   def current_time
@@ -65,7 +66,7 @@ class TimeManager < Monitor
     synchronize do
       @numAbelhas += 1
       adiciona_evento @signalAbelhas[id], current_time + t
-      if false
+      if !$pote.pode_entrar?
         skip_ate_evento
       end
       wait @signalAbelhas[id]
@@ -84,7 +85,7 @@ class TimeManager < Monitor
   # Encerra execução da thread
   def encerra
     while !@pq.empty?
-      wake @pq.pop
+      signal @pq.pop
     end
     Thread.kill @manager
   end
@@ -106,5 +107,5 @@ class TimeManager < Monitor
 
   def adiciona_evento e, priority
     @pq.push e, priority.to_i
-  
+  end
 end

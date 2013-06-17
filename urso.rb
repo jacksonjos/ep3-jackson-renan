@@ -25,9 +25,9 @@ class Urso
     while true #TODO: definir condição de parada
       $monitor.urso_request
       @numVezesAcordado += 1
-      $monitor.espera_urso (@T/2).floor
+      $gerenciadorTempo.espera_urso (@T/2).floor
       #anuncia meio pote
-      $gerenciadorTempo.espera (@T/2).ceil #caso T impar nao ferrar
+      $gerenciadorTempo.espera_urso (@T/2).ceil #caso T impar nao ferrar
       $pote.esvazia_pote
       $monitor.urso_free
     end
