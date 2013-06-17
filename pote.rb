@@ -3,6 +3,7 @@
 require "rubygems"
 require "monitor"
 require "main.rb"
+require "graphics.rb"
 
 class Pote < Monitor
 
@@ -54,7 +55,10 @@ class Pote < Monitor
 
   def pronto?
     synchronize do
-      self.cheio? && @numAbelhas == 0
+      if @mel == @capacidadePote
+        evento_especial "Pote cheio:"
+      end
+      @mel == @capacidadePote && @numAbelhas == 0
     end
   end
 
@@ -69,11 +73,19 @@ class Pote < Monitor
 #      @mel + n >= @capacidadePote
 #    end
 #  end
+
   def evento_especial tipo_de_evento
+    somaNumVezesAbelhaAcordouUrsos = 0
+    somaNumVezesUrsosComeram = 0
     puts tipo_de_evento
     $abelhas.each {|abelha| print "#{abelha.estado}\n"}
-    $abelhas.each {|abelha| print "#{abelha.numUrsosAcordados}\n"}
-    $ursos.each {|urso| print "#{urso.numVezesAcordado}\n"}
+    $abelhas.each {|abelha| print "#{abelha.numUrsosAcordados}\n"
+                  somaNumVezesAbelhaAcordouUrsos += abelha.numUrsosAcordados}
+    $mediaVezesAbelhasAcordaramUrsos  <<  (somaNumVezesAbelhaAcordouUrsos / $abelhas.length).to_f
+    $ursos.each {|urso| print "#{urso.numVezesAcordado}\n"
+                  somaNumVezesUrsosComeram += urso.numVezesAcordado}
+    $mediaVezesUrsosComeram  << (somaNumVezesUrsosComeram / $ursos.length).to_f
+    $tempo << $gerenciadorTempo.current_time - $gerenciadorTempo.startTime 
     print "\n\n"
   end
 
