@@ -5,6 +5,7 @@ require 'priority_queue'
 require 'monitor'
 
 require 'monitoraliases.rb'
+require 'pote.rb'
 
 # Neste EP cada unidade de tempo t gasta pelas das threads para realizar
 # as tarefas que lhes cabem equivale a um segundo.
@@ -66,7 +67,7 @@ class TimeManager < Monitor
     synchronize do
       @numAbelhas += 1
       adiciona_evento @signalAbelhas[id], current_time + t
-      if false #TODO: alterar para verificar se nao vai entrar mais abelhas
+      if !$pote.pode_entrar? #TODO: alterar para verificar se nao vai entrar mais abelhas
         skip_ate_evento
       end
       wait @signalAbelhas[id]
