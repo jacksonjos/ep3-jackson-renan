@@ -49,6 +49,7 @@ class TimeManager  < Monitor
       
       while true
         sleep(1)
+        print "ohai\n"
         synchronize do
           while @pq.min_priority <= current_time
             signal @pq.pop

@@ -45,6 +45,12 @@ for id in 0..B-1
   threadsUrso << Thread.new {$ursos[id].durma_e_coma}
 end
 
+Thread.new{
+  while true
+    pizza = 1
+  end
+}
+
 # O método join garante que o script finaliza apenas quando a execução
 # de todas as threads na lista thr é encerrada 
 threadsAbelha.each{ |thr| thr.join }
