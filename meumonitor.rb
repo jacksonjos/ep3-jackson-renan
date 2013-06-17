@@ -22,10 +22,10 @@ class ControladorAcesso   < Monitor
   end
 
   def abelha_request i
-    print "Abelha #{i} fazendo request, entrando no monitor\n"
+    # print "Abelha #{i} fazendo request, entrando no monitor\n"
     
     synchronize do
-      print "Abelha #{i} fazendo request, dentro do monitor\n"
+    #  print "Abelha #{i} fazendo request, dentro do monitor\n"
       
       $abelhas[i].estado = :voando_esperando_espaco_para_depositar_mel
       while !(@nenhumUrso && $pote.pode_entrar?)
@@ -40,15 +40,16 @@ class ControladorAcesso   < Monitor
       
       $pote.insere_abelha
     end
-    print "Abelha #{i} saindo do monitor\n"
+    #print "Abelha #{i} saindo do monitor\n"
     
   end
   
-  def abelha_free
+  def abelha_free i
     
     synchronize do
       $pote.remove_abelha
       if $pote.pronto?
+        print "pronto! \n"
         # se abelha->rodando é verdade, enchendo @pote, else, esperando vaga
         $abelhas[i].conta_urso_acordado
         signal(@entraUrso)
@@ -74,6 +75,7 @@ class ControladorAcesso   < Monitor
   def urso_free
     
     synchronize do
+      print "FEED ME BITCHES\n"
       signal_all(@entraAbelha)
     end
   end 

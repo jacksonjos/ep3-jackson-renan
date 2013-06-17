@@ -40,37 +40,41 @@ class TimeManager  < Monitor
     for i in 0..n-1
       @signalAbelhas[i] = new_cond
     end
-    @manager = Thread.new{
+#    @manager = Thread.new{
       
       # Como a unidade de tempo implementada foi de 1 segundo o sleep é implementado
       # para que a thread faça a checagem da fila uma vez por segundo. Afinal, quando
       # há diferença entre a prioridade (tempo) entre os objetos ela será medida entre
       # segundos.
       
-      while true
-        sleep(1)
-        print "ohai\n"
-        $gerenciadorTempo.synchronize do
-          print "synchronize do ohai\n"
-          while !@pq.empty? && @pq.min_value <= current_time
-            print "dentro do while do ohai\n"
-            if @pq.empty?
-              printf "WHY GOD WHY\n"
-            end
-            condvar = @pq.pop_min
-            print "condvar popado\n"
-            signal condvar
-            print "sinalizado!\n"
-          end
-          print "saindo sync do ohai\n"
-        end
-      end
-    }
+ #     while true
+  #      sleep(1)
+    #    ohai
+   #   end
+   # }
     
   end
   
+  def ohai
     
-    
+    print "ohai\n"
+    synchronize do
+      print "synchronize do ohai\n"
+      while !@pq.empty? && @pq.min_value <= current_time
+        print "dentro do while do ohai\n"
+        if @pq.empty?
+          printf "WHY GOD WHY\n"
+        end
+        condvar = @pq.pop_min
+        print "condvar popado\n"
+        signal condvar
+        print "sinalizado!\n"
+      end
+      print "saindo sync do ohai\n"
+    end
+    print "fora sync ohai\n"
+  end
+  
   # Retorna o tempo simbólico atual
   def current_time
     print "Enter current time\n"
@@ -103,6 +107,8 @@ class TimeManager  < Monitor
     synchronize do
       skip_time t
     end
+    print "Sai espera urso\n"
+    
   end
   
   # Encerra execução da thread
@@ -118,8 +124,10 @@ class TimeManager  < Monitor
 
   # Salto de tempo 
   def skip_time t
-    print "enter skip time\n"
-    @skippedTime += t
+    print "enter skip time #{t}\n"
+    # @skippedTime += t
+    sleep 1
+    print "sai skip time"
   end
 
   # salto de tempo realizado para que seja possível passar do evento corrente

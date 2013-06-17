@@ -37,10 +37,11 @@ class Pote < Monitor
   def adiciona_mel
     synchronize do
       @mel += 1
+      print "mais mel! #{@mel}\n"
       # Self se refere ao próprio objeto da classe instanciado
       if self.meio_cheio?
         # se abelha->rodando é verdade, então enchendo @pote, else, esperando vaga
-        evento_especial "Pote na metade enquanto as abelhas estão enchendo:" # Falta implementar
+        # evento_especial "Pote na metade enquanto as abelhas estão enchendo:" # Falta implementar
       end
     end
   end
@@ -54,8 +55,8 @@ class Pote < Monitor
 
   def cheio?
     synchronize do
-      if @mel == @capacidadePote
-        evento_especial "Pote cheio:"
+      if @mel >= @capacidadePote
+       # evento_especial "Pote cheio:"
         return true
       end
     end
@@ -64,25 +65,24 @@ class Pote < Monitor
   def pronto?
     synchronize do
       if @mel == @capacidadePote
-        evento_especial "Pote cheio:"
+        print "cheio, #{@numAbelhas} abelhas no pote\n"
+       # print "\n\n   PRONTO !!!! \n\n"
+      #  evento_especial "Pote cheio:"
       end
-      @mel == @capacidadePote && @numAbelhas == 0
+      @mel >= @capacidadePote && @numAbelhas == 0
     end
   end
 
   def pode_entrar?
     synchronize do
-      @numAbelhas < 100 && @numAbelhas + @mel <= @capacidadePote
+      @numAbelhas < 100 && @numAbelhas + @mel < @capacidadePote
     end
   end
 
-#  def vai_encher? n
-#    synchronize do
-#      @mel + n >= @capacidadePote
-#    end
-#  end
-
   def evento_especial tipo_de_evento
+  end
+  
+  def nada
     somaNumVezesAbelhaAcordouUrsos = 0
     somaNumVezesUrsosComeram = 0
     puts tipo_de_evento
@@ -97,7 +97,7 @@ class Pote < Monitor
     print "\n\n"
   end
 
-  private
+  #private
   def meio_cheio?
     @mel == (@capacidadePote / 2).floor
   end

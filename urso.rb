@@ -24,11 +24,14 @@ class Urso
 
   def durma_e_coma
     while true #TODO: definir condição de parada
+      print "urso #{@id} fazendo request\n"
       $monitor.urso_request
+      print "urso #{@id} will comer!\n"
       @numVezesAcordado += 1
       $gerenciadorTempo.espera_urso (@T/2).floor
-      $pote.evento_especial "Pote na metade enquanto urso está comendo:"
+      # $pote.evento_especial "Pote na metade enquanto urso está comendo:"
       $gerenciadorTempo.espera_urso (@T/2).ceil #caso T impar nao ferrar
+      print "burp\n"
       $pote.esvazia_pote
       $monitor.urso_free
     end
