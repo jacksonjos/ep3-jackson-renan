@@ -11,6 +11,19 @@ class Pote < Monitor
 
   def initialize h
     @capacidadePote = h
+    @numAbelhas = 0
+  end
+
+  def insere_abelha
+    synchronize do
+      @numAbelhas += 1
+    end
+  end
+
+  def remove_abelha
+    synchronize do
+      @numAbelhas -= 1
+    end
   end
 
   # Método que executa a adição de uma porção de mel por uma dada abelha
@@ -37,11 +50,23 @@ class Pote < Monitor
     end
   end
 
-  def vai_encher? n
+  def pronto?
     synchronize do
-      @mel + n >= @capacidadePote
+      @mel = @capacidadePote && @numAbelhas == 0
     end
   end
+
+  def pode_entrar?
+    synchronize do
+      @numAbelhas < 100 && @numAbelhas + @mel <= @capacidadePote
+    end
+  end
+
+#  def vai_encher? n
+#    synchronize do
+#      @mel + n >= @capacidadePote
+#    end
+#  end
 
   private
   def meio_cheio?

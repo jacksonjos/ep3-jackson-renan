@@ -23,20 +23,20 @@ class ControladorAcesso < Monitor
     
     synchronize do
       $abelhas[i].estado = :voando
-      while !(@numAbelhas < 100 && @nenhumUrso && !@pote.vai_encher? @numAbelhas)
+      while !(@nenhumUrso && pote.pode_entrar?)
         wait(@entraAbelha) #
       end
       $abelhas[i].estado = :depositando
       
-      @numAbelhas += 1
+      $pote.insere_abelha
     end
   end
   
   def abelha_free
     
     synchronize do
-      @numAbelhas -= 1
-      if $pote.cheio? && @numAbelhas == 0
+      $pote.remove_abelha
+      if $pote.pronto?
         # se abelha->rodando é verdade, enchendo @pote, else, esperando vaga
         avisaMeioCheio # Falta implementar
         $abelhas[i].conta_urso_acordado
