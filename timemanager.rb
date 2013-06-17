@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 require 'rubygems'
 require 'time'
 require 'priority_queue'
@@ -23,29 +24,32 @@ class TimeManager
     # para que a thread faça a checagem da fila uma vez por segundo. Afinal, quando
     # há diferença entre a prioridade (tempo) entre os objetos ela será medida entre
     # segundos.
-    Thread.new{
+    manager = Thread.new{
 
       sleep(1)
-      while @pq.min_priority <= Time.now
+      while @pq.min_priority <= cur_time
         wake @pq.pop
       end
     }
   end
   
-  def skipAteEvento
-    skipTime @pq.min_priority - Time.now
-  end
-
-  def adicionaEvento t, priority
-    @pq.push t, t.to_i
-  end
-
-  def curTime
+  # Retorna o tempo simbólico atual
+  def cur_time
     currentTime = Time.new - @startTime + @skippedTime
     return currentTime
   end
+
+  def skip_ate_evento
+    skipTime @pq.min_priority - cur_time
+  end
+
+  def adiciona_evento t, priority
+    @pq.push t, t.to_i
+  end
+
   
-  def skipTime t
+  
+  def skip_time t
     @skippedTime += t
   end
   
@@ -53,6 +57,6 @@ class TimeManager
     while !@pq.empty?
       wake @pq.pop
     end
-    #mata a thread que ele cria?
+    Thread.kill manager
   end
 end
