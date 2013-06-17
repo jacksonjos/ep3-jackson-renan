@@ -27,10 +27,6 @@ class Abelha
 
   def trabalhe
     while true #TODO: definir condição de parada
-      puts $monitor.class
-      if $monitor.nil?
-        print "pera, isso nao era pra ser nil\n"
-      end
       $monitor.abelha_request @id
       $gerenciadorTempo.espera_abelha @id, @t
       $pote.adiciona_mel

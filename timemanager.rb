@@ -25,9 +25,7 @@ class TimeManager  < Monitor
   @skippedTime = 0
   
   @numAbelhas = 0
-  
- # include MonitorMixin
- 
+   
 
   # Inicializa contagem do
   def initialize 
@@ -115,7 +113,6 @@ class TimeManager  < Monitor
   
 
   def adiciona_evento e, priority
-    print "#{@pq.class}\n"
     @pq.push e, priority.to_i
   end
 end
