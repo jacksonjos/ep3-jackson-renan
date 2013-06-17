@@ -31,7 +31,7 @@ class Pote < Monitor
       # Self se refere ao próprio objeto da classe instanciado
       if self.meio_cheio?
         # se abelha->rodando é verdade, então enchendo @pote, else, esperando vaga
-        avisaMeioCheio # Falta implementar
+        evento_especial "Pote na metade enquanto as abelhas estão enchendo:" # Falta implementar
       end
     end
   end
@@ -40,17 +40,21 @@ class Pote < Monitor
     synchronize do
       @mel = 0
     end
+    evento_especial "Pote vazio:"
   end
 
   def cheio?
     synchronize do
-      @mel == @capacidadePote
+      if @mel == @capacidadePote
+        evento_especial "Pote cheio:"
+        return true
+      end
     end
   end
 
   def pronto?
     synchronize do
-      @mel == @capacidadePote && @numAbelhas == 0
+      self.cheio? && @numAbelhas == 0
     end
   end
 
@@ -65,6 +69,13 @@ class Pote < Monitor
 #      @mel + n >= @capacidadePote
 #    end
 #  end
+  def evento_especial tipo_de_evento
+    puts tipo_de_evento
+    $abelhas.each {|abelha| print "#{abelha.estado}\n"}
+    $abelhas.each {|abelha| print "#{abelha.numUrsosAcordados}\n"}
+    $ursos.each {|urso| print "#{urso.numVezesAcordado}\n"}
+    print "\n\n"
+  end
 
   private
   def meio_cheio?

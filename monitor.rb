@@ -4,6 +4,7 @@ require "rubygems"
 
 require "monitoraliases.rb"
 require "pote.rb"
+require "main.rb"
 
 
 class ControladorAcesso < Monitor
@@ -22,11 +23,14 @@ class ControladorAcesso < Monitor
   def abelha_request
     
     synchronize do
-      $abelhas[i].estado = :voando
-      while !(@nenhumUrso && pote.pode_entrar?)
+      $abelhas[i].estado = :voando_esperando_espaco_para_depositar_mel
+      while !(@nenhumUrso && $pote.pode_entrar?)
+        if !@nenhumUrso
+          $abelhas[i].estado = :parada_esperando_urso_comer_mel
+        end
         wait(@entraAbelha) #
       end
-      $abelhas[i].estado = :depositando
+      $abelhas[i].estado = :depositando_mel_no_pote
       
       $pote.insere_abelha
     end
@@ -38,15 +42,14 @@ class ControladorAcesso < Monitor
       $pote.remove_abelha
       if $pote.pronto?
         # se abelha->rodando é verdade, enchendo @pote, else, esperando vaga
-        avisaMeioCheio # Falta implementar
         $abelhas[i].conta_urso_acordado
         signal(@entraUrso)
         
       elsif !$pote.cheio?
         signal(@entraAbelha)
+        $abelhas[i].estado = :buscando_mel
       end
       
-      $abelhas[i].estado = :buscandoMel
     end
   end
 
