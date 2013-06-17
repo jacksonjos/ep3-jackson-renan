@@ -86,7 +86,7 @@ class TimeManager < Monitor
   # Encerra execução da thread
   def encerra
     while !@pq.empty?
-      wake @pq.pop
+      signal @pq.pop
     end
     Thread.kill @manager
   end
