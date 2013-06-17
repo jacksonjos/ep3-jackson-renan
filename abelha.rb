@@ -2,20 +2,21 @@
 
 require 'rubygems'
 require "monitor.rb"
+require "timemanager.rb"
 
 class Abelha
 
-  def initialize t
-
+  def initialize t, id
+    @t = t
+    @id = id
   end
 
   def trabalhe
     while true #TODO: definir condição de parada
-      ControladorAcesso.abelha_request
-      #espera t
-      Pote.adiciona_mel #  <-- talvez. Acho que aqui seria melhor, mas podemos
-      # mudar o algoritmo do monitor agora?
-      ControladorAcesso.abelha_free
+      $monitor.abelha_request
+      $gerenciadorTempo.espera_abelha id, t
+      $pote.adiciona_mel
+      $monitor.abelha_free
     end
   end
 
