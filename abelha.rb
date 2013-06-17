@@ -5,10 +5,13 @@ require "monitor.rb"
 require "timemanager.rb"
 
 class Abelha
+  
+  attr_acessor :estado
 
   def initialize t, id
     @t = t
     @id = id
+    @numUrsosAcordados += 1
   end
 
   def trabalhe
@@ -18,6 +21,10 @@ class Abelha
       $pote.adiciona_mel
       $monitor.abelha_free
     end
+  end
+
+  def conta_urso_acordado
+    @numUrsosAcordados += 1
   end
 
 end
