@@ -2,7 +2,7 @@
 
 require 'rubygems'
 
-require './monitor.rb'
+require './meumonitor.rb'
 require './timemanager.rb'
 #require "./main.rb"
 

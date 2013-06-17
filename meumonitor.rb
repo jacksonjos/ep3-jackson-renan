@@ -21,7 +21,6 @@ class ControladorAcesso #  < Monitor
   end
 
   def abelha_request
-    
     synchronize do
       $abelhas[i].estado = :voando_esperando_espaco_para_depositar_mel
       while !(@nenhumUrso && $pote.pode_entrar?)

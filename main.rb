@@ -4,7 +4,7 @@ require "rubygems"
 
 require "./abelha.rb"
 require "./urso.rb"
-require "./monitor.rb"
+require "./meumonitor.rb"
 require "./pote.rb"
 require "./timemanager.rb"
 

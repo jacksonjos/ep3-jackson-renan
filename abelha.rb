@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 require 'rubygems'
-require "./monitor.rb"
+require "./meumonitor.rb"
 require "./timemanager.rb"
 require "./pote.rb"
 #require "./main.rb"
