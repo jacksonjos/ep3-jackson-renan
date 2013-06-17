@@ -51,9 +51,12 @@ class TimeManager  < Monitor
         sleep(1)
         print "ohai\n"
         synchronize do
+          print "synchronize do ohai\n"
           while @pq.min_priority <= current_time
+            print "dentro do while do ohai\n"
             signal @pq.pop
           end
+          print "saindo sync do ohai\n"
         end
       end
     }
@@ -64,12 +67,15 @@ class TimeManager  < Monitor
     
   # Retorna o tempo simbólico atual
   def current_time
+    print "Enter current time\n"
     currentTime = Time.now.to_i - @startTime.to_i + @skippedTime.to_i
+    print "Saindo current time\n"
     return currentTime
   end
   
   def espera_abelha id, t
     synchronize do
+      print "Enter espera abelha\n"
       if @signalAbelhas[id].nil?
         print "wat\n"
       end
@@ -77,7 +83,9 @@ class TimeManager  < Monitor
       if !$pote.pode_entrar?
         skip_ate_evento
       end
+      print "Abelha #{id} vai esperar!\n"
       wait @signalAbelhas[id]
+      print "Abelha #{id} acordou\n"
       @numAbelhas -= 1
     end
   end
@@ -85,6 +93,7 @@ class TimeManager  < Monitor
   # Método que faz a contagem do tempo gasto pela thread urso para esvaziar
   # o buffer (pote de mel)
   def espera_urso t
+    print "Enter espera urso\n"
     synchronize do
       skip_time t
     end
@@ -103,17 +112,21 @@ class TimeManager  < Monitor
 
   # Salto de tempo 
   def skip_time t
+    print "enter skip time\n"
     @skippedTime += t
   end
 
   # salto de tempo realizado para que seja possível passar do evento corrente
   # para outro que está esperando para poder executar
   def skip_ate_evento
+    print "Enter skip ate evento\n"
     skip_time (@pq.min_priority - current_time)
   end
   
 
   def adiciona_evento e, priority
+    print "Enter adiciona evento\n"
     @pq.push e, priority.to_i
+    print "Sai adiciona evento\n"
   end
 end
