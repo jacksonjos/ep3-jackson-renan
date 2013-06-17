@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 
 require 'rubygems'
-require 'monitor.rb'
-require 'timemanager.rb'
-require "main.rb"
+
+require './monitor.rb'
+require './timemanager.rb'
+require "./main.rb"
 
 
 # Os objetos da classe urso executam como threads que têm a função e consumir dados
@@ -15,8 +16,8 @@ require "main.rb"
 # presentes nele  
 class Urso
 
-  def initialize T, id
-    @T = T
+  def initialize t, id
+    @T = t
     @id = id
     @numVezesAcordado = 0
   end

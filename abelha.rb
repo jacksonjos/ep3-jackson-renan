@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 require 'rubygems'
-require "monitor.rb"
-require "timemanager.rb"
-require "pote.rb"
-require "main.rb"
+require "./monitor.rb"
+require "./timemanager.rb"
+require "./pote.rb"
+require "./main.rb"
 
 class Abelha
   

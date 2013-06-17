@@ -3,8 +3,8 @@ require 'rubygems'
 require 'time'
 require 'priority_queue'
 
-require 'monitoraliases.rb'
-require 'pote.rb'
+require './monitoraliases.rb'
+require './pote.rb'
 
 # Neste EP cada unidade de tempo t gasta pelas das threads para realizar
 # as tarefas que lhes cabem equivale a um segundo.

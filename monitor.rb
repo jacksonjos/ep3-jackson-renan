@@ -2,9 +2,8 @@
 
 require "rubygems"
 
-require "monitoraliases.rb"
-require "pote.rb"
-require "main.rb"
+require "./monitoraliases.rb"
+require "./pote.rb"
 
 
 class ControladorAcesso < Monitor
