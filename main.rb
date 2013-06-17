@@ -28,15 +28,15 @@ $gerenciadorTempo = TimeManager.new(N)
 $pote = Pote.new(H)
 # Inicializando N threads abelha e B threads urso
 
-1..N.each{ |id|
+for id in 1..N
   $abelhas << Abelha.new(t, id)
   threadsAbelha << Thread.new {$abelhas[id].trabalhe}
-}
+end
 
-1..B.each{ |id|
+for id in 1..B
   $ursos << Urso.new(T, id)
   threadsUrso << Thread.new {$ursos[id].durma_e_coma}
-}
+end
 
 # O método join garante que o script finaliza apenas quando a execução
 # de todas as threads na lista thr é encerrada 

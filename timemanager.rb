@@ -29,16 +29,14 @@ class TimeManager < Monitor
   @signalAbelhas = []
 
   # Inicializa contagem do
-  def initialize N
+  def initialize n
     # Time.new inicializa uma variável com o tempo corrente
     @startTime = Time.new
 
-    1..N.each{
+    for i in 1..n
       @signalAbelhas << new_cond
-    }
+    end
     
-    @totalAbelhas = N
-
     # Como a unidade de tempo implementada foi de 1 segundo o sleep é implementado
     # para que a thread faça a checagem da fila uma vez por segundo. Afinal, quando
     # há diferença entre a prioridade (tempo) entre os objetos ela será medida entre
