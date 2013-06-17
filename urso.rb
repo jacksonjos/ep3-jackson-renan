@@ -2,6 +2,7 @@
 
 require 'rubygems'
 require 'monitor.rb'
+require 'timemanager.rb'
 
 
 # Os objetos da classe urso executam como threads que têm a função e consumir dados
@@ -14,18 +15,17 @@ require 'monitor.rb'
 class Urso
 
   def initialize T
-
+    @T = T
   end
 
   def durma_e_coma
     while true #TODO: definir condição de parada
-      ControladorAcesso.urso_request
-      #espera T/2
+      $monitor.urso_request
+      $monitor.espera_urso (@T/2).floor
       #anuncia meio pote
-      #espera T-T/2 #caso T impar nao ferrar
-      Pote.esvazia_pote # <-- fica mais claro. Podemos mudar o algoritmo do
-      # monitor?
-      ControladorAcesso.urso_free
+      $gerenciadorTempo.espera (@T/2).ceil #caso T impar nao ferrar
+      $pote.esvazia_pote
+      $monitor.urso_free
     end
   end
 
