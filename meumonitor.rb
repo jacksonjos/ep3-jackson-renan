@@ -19,6 +19,7 @@ class ControladorAcesso   < Monitor
     @entraUrso =  new_cond
     @entraAbelha = new_cond
     super
+    @done = false
   end
 
   def abelha_request i
@@ -74,4 +75,13 @@ class ControladorAcesso   < Monitor
       signal_all(@entraAbelha)
     end
   end 
+  
+  def encerra
+    if !@done
+      @done = true
+      signal_all @entraAbelha
+      signal_all @entraUrso
+    end
+  end
+  
 end
