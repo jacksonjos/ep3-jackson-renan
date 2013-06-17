@@ -5,6 +5,8 @@ require "rubygems"
 require "abelha.rb"
 require "urso.rb"
 require "monitor.rb"
+require "pote.rb"
+require "timemanager.rb"
 
 # Argumentos passados pela linha de comando
 

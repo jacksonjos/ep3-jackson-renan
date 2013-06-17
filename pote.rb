@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
+require "rubygems"
 require "monitor"
 
 class Pote < Monitor
-  # Aqui vale o mesmo que foi explicado para o método accessor com a diferença
-  # de que é criado apenas um método getter para @mel. Assim é possível saber o
-  # número de mel executando pote.mel sendo que pote é um objeto da classe Pote.
+  # Aqui vale o mesmo que foi explicado para o método attr_accessor do arquivo 'abelha.rb'
+  # com a diferença de que é criado apenas um método getter para @mel. Assim é possível
+  # saber o número de mel executando pote.mel sendo que pote é um objeto da classe Pote.
   attr_reader :mel
 
   def initialize h
@@ -16,8 +17,9 @@ class Pote < Monitor
   def adiciona_mel
     synchronize do
       @mel += 1
-      if @pote.meio_cheio?
-        # se abelha->rodando é verdade, entao enchendo @pote, else, esperando vaga
+      # Self se refere ao próprio objeto da classe instanciado
+      if self.meio_cheio?
+        # se abelha->rodando é verdade, então enchendo @pote, else, esperando vaga
         avisaMeioCheio # Falta implementar
       end
     end
