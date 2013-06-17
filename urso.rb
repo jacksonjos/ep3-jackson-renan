@@ -30,7 +30,6 @@ class Urso
       print "urso #{@id} will comer!\n"
       @numVezesAcordado += 1
       $gerenciadorTempo.espera_urso (@T/2).floor
-      # $pote.evento_especial "Pote na metade enquanto urso está comendo:"
       $gerenciadorTempo.espera_urso (@T/2).ceil #caso T impar nao ferrar
       print "burp\n"
       $pote.esvazia_pote

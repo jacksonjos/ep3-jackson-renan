@@ -14,7 +14,7 @@ require './pote.rb'
 # tarefa são realizados saltos (skips) no tempo do TimeManager. Tais saltos
 # são executados em métodos cujos nomes começam por skip.
 
-# A bilbioteca (gem) priority queue é uma simples fila de prioridades
+# A bilbioteca (gem) priority_queue é uma simples fila de prioridades
 # que implementa uma fila em que os objetos são ordenados com prioridades
 # crescentes. No caso a prioridade consiste de valores crescentes.
 
@@ -25,7 +25,6 @@ class TimeManager  < Monitor
   @skippedTime = 0
   
   @numAbelhas = 0
-   
 
   # Inicializa contagem do
   def initialize 
@@ -40,18 +39,6 @@ class TimeManager  < Monitor
     for i in 0..n-1
       @signalAbelhas[i] = new_cond
     end
-#    @manager = Thread.new{
-      
-      # Como a unidade de tempo implementada foi de 1 segundo o sleep é implementado
-      # para que a thread faça a checagem da fila uma vez por segundo. Afinal, quando
-      # há diferença entre a prioridade (tempo) entre os objetos ela será medida entre
-      # segundos.
-      
- #     while true
-  #      sleep(1)
-    #    ohai
-   #   end
-   # }
     
   end
   
@@ -110,7 +97,7 @@ class TimeManager  < Monitor
     print "Sai espera urso\n"
     
   end
-  
+
   # Encerra execução da thread
   def encerra
     while !@pq.empty?
@@ -118,14 +105,13 @@ class TimeManager  < Monitor
     end
     Thread.kill @manager
   end
-  
+
   # Define que os métodos abaixo desta cláusula são do tipo privados na classe
   private
 
   # Salto de tempo 
   def skip_time t
     print "enter skip time #{t}\n"
-    # @skippedTime += t
     sleep 1
     print "sai skip time"
   end
@@ -136,7 +122,6 @@ class TimeManager  < Monitor
     print "Enter skip ate evento\n"
     skip_time (@pq.min_priority - current_time)
   end
-  
 
   def adiciona_evento e, priority
     print "Enter adiciona evento\n"
