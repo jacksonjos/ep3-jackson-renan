@@ -30,7 +30,7 @@ class TimeManager < Monitor
 
   # Inicializa contagem do
   def initialize N
-    # Time.new inicializa uma variável com a data e hora do momento em que ela é chamada
+    # Time.new instancia um objeto com a data e hora do momento em que ela é chamada
     @startTime = Time.new
 
     1..N.each{
