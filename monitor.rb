@@ -3,6 +3,8 @@
 require "rubygems"
 require "monitor"
 
+require "monitoraliases.rb"
+
 # Arrays com informações sobre abelhas e ursos.
 # Os arrays abaixo são inicializados dentro do monitor e são do
 # tipo das classes de mesmo nome que estão logo abaixo
@@ -75,24 +77,6 @@ class Pote < Monitor
   end
 
 end
-
-
-class Monitor
-# renomeando nome de métodos do ruby para os nomes exigidos no EP
-
-  def wait(condvar)
-    condvar.wait
-  end
-
-  def signal(condvar)
-    condvar.signal
-  end
-
-  def signal_all(condvar)
-    condvar.broadcast
-  end
-end
-
 
 class ControladorAcesso < Monitor
   
