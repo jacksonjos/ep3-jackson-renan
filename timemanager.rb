@@ -2,7 +2,6 @@
 require 'rubygems'
 require 'time'
 require 'priority_queue'
-require 'monitor'
 
 require 'monitoraliases.rb'
 
@@ -66,7 +65,7 @@ class TimeManager < Monitor
     synchronize do
       @numAbelhas += 1
       adiciona_evento @signalAbelhas[id], current_time + t
-      if false #TODO: alterar para verificar se nao vai entrar mais abelhas
+      if false
         skip_ate_evento
       end
       wait @signalAbelhas[id]
@@ -104,6 +103,7 @@ class TimeManager < Monitor
     skip_time (@pq.min_priority - current_time)
   end
   
+
   def adiciona_evento e, priority
     @pq.push e, priority.to_i
   

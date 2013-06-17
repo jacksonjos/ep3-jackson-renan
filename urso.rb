@@ -3,6 +3,7 @@
 require 'rubygems'
 require 'monitor.rb'
 require 'timemanager.rb'
+require "main.rb"
 
 
 # Os objetos da classe urso executam como threads que têm a função e consumir dados

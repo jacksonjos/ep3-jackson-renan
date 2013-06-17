@@ -3,6 +3,8 @@
 require 'rubygems'
 require "monitor.rb"
 require "timemanager.rb"
+require "pote.rb"
+require "main.rb"
 
 class Abelha
   
@@ -15,7 +17,7 @@ class Abelha
   # interpretado como @estado dentro de Abelha que é como se define
   # uma variável de instância.
 
-  attr_acessor :estado
+  attr_accessor :estado
 
   def initialize t, id
     @t = t

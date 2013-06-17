@@ -21,17 +21,14 @@ Sobre a linguagem:
 
 Em Ruby todo método retorna algo. Assim, quando temos um método sem a declaração do comando
 return o método retorna a última declaração de variável feita dentro dele.   
-Além disso em ruby tudo é um objeto e é possível saber quais métodos cada objeto possui abrindo o irb
-(interpretador do ruby) digitando 'irb' na linha de comando. Aí basta digitar ClasseX.methods ou
-var.methods sendo que var é um objeto previamente criado. Vale lembrar que para criar um objeto não é
-necessário digitar 'obj = ClasseX.new'. Para objetos de determinadas classes basta digitar obj = 5 ou
-obj = "string" para objetos/variáveis do tipo bignum e string, por exemplo.
+Além disso em ruby tudo é um objeto e é possível saber quais métodos cada objeto possui abrindo o irb (interpretador do ruby) digitando 'irb' na linha de comando. Aí basta digitar ClasseX.methods ou var.methods sendo que var é um objeto previamente criado. Vale lembrar que para criar um objeto não é necessário digitar 'obj = ClasseX.new'. Para objetos de determinadas classes basta digitar obj = 5 ou obj = "string" para objetos/variáveis do tipo bignum e string, por exemplo.
 Métodos que terminam com '?' retornam um valor booleano, pois o ponto de interrogação significa que
 queremos saber se a resposta do método é sim ou não (verdade ou falso).
 
-Todas as classes possuem o método initialize, pois ele é chamada quando é instanciado um novo objeto de
-qualquer classe com eventuais argumentos e inicializa as variáveis de instância da classe entre outros
-objetos.
+Todas as classes possuem o método initialize, pois ele é chamada quando é instanciado um novo objeto de qualquer classe com eventuais argumentos e inicializa as variáveis de instância da classe entre outros objetos.
+
+Métodos da própria classe podem ser atribuídos a variáveis dentro dela apenas utilizando o nome do
+método como, por exemplo na classe ControladorAcesso em que temos a atribuição '@entraUrso =  new_cond' onde new_cond é um método do módulo MixinMonitor que faz parte da classe Monitor que é herdada em ControleAcesso. Inclusive quando se quer alterar ou criar métodos de uma classe pré-existente deve-se criar uma nova classe de mesmo nome definindo os objetos e carregando a respectiva biblioteca da classe original. Assim, pode-se usar a nova classe com os métodos da original mais os métodos. No caso dos métodos terem o mesmo nome será executado o método sobrecarregado ou sobreescrito. Isso também é útil quando se quer usar um outro nome para um método pré-existente.
 
 Quaisquer dúvidas sobre o uso do irb ou da linguagem basta enviar um e-mail para jackson@ime.usp.br
 

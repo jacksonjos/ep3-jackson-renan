@@ -2,16 +2,14 @@
 
 require "rubygems"
 require "monitor"
+require "main.rb"
 
 class Pote < Monitor
-  # Aqui vale o mesmo que foi explicado para o método attr_accessor do arquivo 'abelha.rb'
-  # com a diferença de que é criado apenas um método getter para @mel. Assim é possível
-  # saber o número de mel executando pote.mel sendo que pote é um objeto da classe Pote.
-  attr_reader :mel
 
   def initialize h
     @capacidadePote = h
     @numAbelhas = 0
+    @mel = 0
   end
 
   def insere_abelha
@@ -52,7 +50,7 @@ class Pote < Monitor
 
   def pronto?
     synchronize do
-      @mel = @capacidadePote && @numAbelhas == 0
+      @mel == @capacidadePote && @numAbelhas == 0
     end
   end
 

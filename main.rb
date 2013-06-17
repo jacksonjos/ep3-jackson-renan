@@ -35,7 +35,7 @@ $pote = Pote.new(H)
 
 1..B.each{ |id|
   $ursos << Urso.new(T, id)
-  threadsUrso << Thread.new {urso = $ursos[id].durma_e_coma}
+  threadsUrso << Thread.new {$ursos[id].durma_e_coma}
 }
 
 # O método join garante que o script finaliza apenas quando a execução
