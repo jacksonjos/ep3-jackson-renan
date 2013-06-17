@@ -37,8 +37,8 @@ class TimeManager  < Monitor
   end
   
   def init n
-    for i in 1..n
-      @signalAbelhas << new_cond
+    for i in 0..n-1
+      @signalAbelhas[i] = new_cond
     end
     @manager = Thread.new{
       
@@ -50,11 +50,14 @@ class TimeManager  < Monitor
       while true
         sleep(1)
         print "ohai\n"
-        synchronize do
+        $gerenciadorTempo.synchronize do
           print "synchronize do ohai\n"
-          while !@pq.empty && @pq.min_priority <= current_time
+          while !@pq.empty? && @pq.min_value <= current_time
             print "dentro do while do ohai\n"
-            condvar = @pq.pop
+            if @pq.empty?
+              printf "WHY GOD WHY\n"
+            end
+            condvar = @pq.pop_min
             print "condvar popado\n"
             signal condvar
             print "sinalizado!\n"

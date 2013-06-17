@@ -38,6 +38,8 @@ class ControladorAcesso   < Monitor
       
       $pote.insere_abelha
     end
+    print "Abelha #{i} saindo do monitor\n"
+    
   end
   
   def abelha_free
