@@ -40,4 +40,8 @@ ao código de forma a evitar o uso de muitos comentários.
 Dessa forma vários métodos não terão comentários, pois parte-se da suposição de que seus respectivos
 nomes são autoexplicativos.
 
-Para rodar o programa basta estar executar o arquivo main.rb na pasta em que ele estiver presente
+Inclusive, ao escrever o programa resolvemos alterar o algoritmo do monitor que seria o 'ControleAcesso' e
+foi incluído o monitor 'Pote' responsável
+
+Para rodar o programa basta estar executar digitar 'main.rb N B H t T' na pasta em que estiver armazenado
+o arquivo main.rb.
