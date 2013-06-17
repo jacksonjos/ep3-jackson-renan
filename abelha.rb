@@ -23,12 +23,12 @@ class Abelha
     @t = t
     @id = id
     @numUrsosAcordados = 0
-    print "Abelha #{id} inicializada, @id = #{@id}\n"
+    print "Abelha #{id} inicializada, @id = #{@id}m objid = #{object_id}\n"
   end
 
   def trabalhe
     while true #TODO: definir condição de parada
-      print "Abelha #{@id} vai pedir pra entrar\n"
+      print "Abelha #{@id} vai pedir pra entrar, objid#{object_id}\n"
       $monitor.abelha_request @id
       #print "Abelha #{@id} vai enrolar agora\n"
       # $gerenciadorTempo.espera_abelha @id, @t

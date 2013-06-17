@@ -20,11 +20,12 @@ class Urso
     @T = t
     @id = id
     @numVezesAcordado = 0
+    print "urso #{@id} #{id} #{object_id} inicializado\n"
   end
 
   def durma_e_coma
     while true #TODO: definir condição de parada
-      print "urso #{@id} fazendo request\n"
+      print "urso #{@id} fazendo request, object id = #{object_id}\n"
       $monitor.urso_request
       print "urso #{@id} will comer!\n"
       @numVezesAcordado += 1

@@ -27,6 +27,8 @@ threadsUrso = []
 $abelhas = []
 $ursos = []
 
+pog = []
+
 # Inicializa monitor que controla o acesso de urso e abelhas ao pote
 $monitor = ControladorAcesso.new
 $gerenciadorTempo = TimeManager.new
@@ -37,16 +39,31 @@ $pote.init(H)
 
 for id in 0..N-1
   print "Criar abelha #{id}\n"
-  $abelhas[id] = Abelha.new(t, id)
+  
+  pog << id
+  print "<- LAST HOPE bee\n"
+  $abelhas[id] = Abelha.new(t, pog[id])
   print "Abelha #{id} criada, mandar rodar\n"
-  threadsAbelha << Thread.new {$abelhas[id].trabalhe}
+  tmpThread = Thread.new{
+    threadsAbelha << Thread.new {$abelhas[pog[id]].trabalhe}
+  }
+  tmpThread.join
   print "Abelha #{id} rodando\n"
 end
 
+pog = []
+
 for id in 0..B-1
-  $ursos << Urso.new(T, id)
-  threadsUrso << Thread.new {$ursos[id].durma_e_coma}
-end
+  pog << id
+  print pog[id]
+  print "<- LAST HOPE urso\n"
+  $ursos[id] =  Urso.new(T, id)
+  tmpThread = Thread.new{
+    threadsUrso << Thread.new {$ursos[pog[id]].durma_e_coma}
+  }
+  tmpThread.join
+  end
+
 
 Thread.new{
   while true
