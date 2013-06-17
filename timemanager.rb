@@ -20,19 +20,21 @@ require './pote.rb'
 
 # O método to_i devolve o valor inteiro de uma variável/objeto.
 
-class TimeManager 
+class TimeManager  < Monitor 
   
   @skippedTime = 0
-  @pq = PriorityQueue.new
+  
   @numAbelhas = 0
   
-  include MonitorMixin
-  
+ # include MonitorMixin
+ 
+
   # Inicializa contagem do
   def initialize 
     # Time.new inicializa uma variável com o tempo corrente
     @startTime = Time.new
     @signalAbelhas = []
+    @pq = PriorityQueue.new    
     super
   end
   
@@ -113,6 +115,7 @@ class TimeManager
   
 
   def adiciona_evento e, priority
+    print "#{@pq.class}\n"
     @pq.push e, priority.to_i
   end
 end

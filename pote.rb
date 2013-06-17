@@ -5,9 +5,9 @@ require "monitor"
 
 # require "./main.rb"
 
-class Pote 
+class Pote < Monitor
   
-  include MonitorMixin
+ # include MonitorMixin
   
   def initialize # h
     #@capacidadePote = h

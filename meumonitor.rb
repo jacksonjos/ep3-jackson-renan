@@ -7,9 +7,9 @@ require "./monitoraliases.rb"
 require "./pote.rb"
 
 
-class ControladorAcesso #  < Monitor
+class ControladorAcesso   < Monitor
   
-  include MonitorMixin
+ # include MonitorMixin
   
   # new_cond é um método do monitor que cria a variável de condição
   def initialize 
