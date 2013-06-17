@@ -3,7 +3,7 @@
 require "rubygems"
 require "monitor"
 
-require "./main.rb"
+# require "./main.rb"
 
 class Pote < Monitor
 

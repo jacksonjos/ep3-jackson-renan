@@ -4,7 +4,7 @@ require 'rubygems'
 require "./monitor.rb"
 require "./timemanager.rb"
 require "./pote.rb"
-require "./main.rb"
+#require "./main.rb"
 
 class Abelha
   
