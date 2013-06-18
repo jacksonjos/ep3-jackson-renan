@@ -29,7 +29,6 @@ class Pote < Monitor
   def adiciona_mel
     synchronize do
       @mel += 1
-      print "more mel, #{@mel}\n"
       # Self se refere ao próprio objeto da classe instanciado
       if self.meio_cheio?
         # se abelha->rodando é verdade, então enchendo @pote, else, esperando vaga
@@ -49,9 +48,6 @@ class Pote < Monitor
   def cheio?
     synchronize do
       if @mel >= @capacidadePote
-
-        print "cheio, mel: #{@mel}, #{@numAbelhas}\n"
-#        evento_especial "Pote cheio:"
         return true
       end
     end
@@ -70,34 +66,29 @@ class Pote < Monitor
 
   def pode_entrar?
     synchronize do
-      print "pode entrar? #{@mel} #{@numAbelhas} #{@numAbelhas + @mel} #{@capacidadePote}\n"
       if @numAbelhas < 100 && @numAbelhas + @mel < @capacidadePote
-        print "foi\n"
         return true
       else
-        print "nope\n"
       end
     end
   end
   
   # O método executa um evento especial como definido no EP e armazena nos vetores apropriados
   # os valores necessários para produzir os gráficos pedidos no enunciado do EP
+
+  #TODO: Fix this
   def evento_especial tipo_de_evento
-    print "EVENTO ESPECIAL NEGADIS #{tipo_de_evento}\n"
-  end
-  
-  def nada
     somaNumVezesAbelhaAcordouUrsos = 0
     somaNumVezesUrsosComeram = 0
-    print "#{tipo_de_evento}\n"
-    $abelhas.each {|abelha| print "#{abelha.estado}\n"}
-    $abelhas.each {|abelha| print "#{abelha.numUrsosAcordados}\n"
+    print "#{tipo_de_evento}\t#{$gerenciadorTempo.current_time.to_i}\n\n"
+    $abelhas.each {|abelha| abelha.print_estado
                   somaNumVezesAbelhaAcordouUrsos += abelha.numUrsosAcordados}
     $mediaVezesAbelhasAcordaramUrsos  <<  (somaNumVezesAbelhaAcordouUrsos / $abelhas.length).to_f
-    $ursos.each {|urso| print "#{urso.numVezesAcordado}\n"
+    print "\n"
+    $ursos.each {|urso| urso.print_estado
                   somaNumVezesUrsosComeram += urso.numVezesAcordado}
     $mediaVezesUrsosComeram  << (somaNumVezesUrsosComeram / $ursos.length).to_f
-    $tempo << $gerenciadorTempo.current_time.to_i - $gerenciadorTempo.startTime.to_i 
+    $tempo << $gerenciadorTempo.current_time.to_i # - $gerenciadorTempo.startTime.to_i 
     print "\n\n"
   end
 

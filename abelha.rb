@@ -18,6 +18,7 @@ class Abelha
   # uma variável de instância.
 
   attr_accessor :estado
+  attr_accessor :numUrsosAcordados
 
   def initialize t, id
     @t = t
@@ -27,10 +28,8 @@ class Abelha
 
   def trabalhe
     while $gerenciadorTempo.current_time <= 600
-#      print "abelha #{@id} vai pedir o pote\n"
       $monitor.abelha_request @id
       sleep @t
-      print "abelha #{@id} vai adicionar mel!\n"
       $pote.adiciona_mel
       $monitor.abelha_free @id
     end
@@ -38,6 +37,10 @@ class Abelha
 
   def conta_urso_acordado
     @numUrsosAcordados += 1
+  end
+  
+  def print_estado
+    print "Abelha #{@id} \t #{estado} \t #{@numUrsosAcordados}\n"
   end
 
 end
