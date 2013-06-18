@@ -7,6 +7,7 @@ require "./urso.rb"
 require "./meumonitor.rb"
 require "./pote.rb"
 require "./timemanager.rb"
+require "./graphics.rb"
 
 # Argumentos passados pela linha de comando
 
@@ -22,12 +23,13 @@ threadsUrso = []
 $abelhas = []
 $ursos = []
 
+$duracao = 60
+
 
 # Inicializa monitor que controla o acesso de urso e abelhas ao pote
 $monitor = ControladorAcesso.new
 $gerenciadorTempo = TimeManager.new
 $pote = Pote.new H
-# $pote.init(H)
 
 # Inicializando N threads abelha e B threads urso
 
@@ -58,7 +60,12 @@ pogThread = Thread.new{
   end
 }
 
+sleep $duracao
+
 # O método join garante que o script finaliza apenas quando a execução
 # de todas as threads na lista thr é encerrada 
-threadsAbelha.each{ |thr| thr.join }
-threadsUrso.each{ |thr| thr.join }
+threadsAbelha.each{ |thr| Thread.kill(thr) }
+threadsUrso.each{ |thr| Thread.kill(thr) }
+Thread.kill (pogThread)
+
+cria_graficos

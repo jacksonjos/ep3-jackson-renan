@@ -25,7 +25,7 @@ class Urso
   end
 
   def durma_e_coma
-    while $gerenciadorTempo.current_time <= 600
+    while  true # $gerenciadorTempo.current_time <= $duracao
       $monitor.urso_request
       @numVezesAcordado += 1
       $gerenciadorTempo.espera_urso (@T/2).floor

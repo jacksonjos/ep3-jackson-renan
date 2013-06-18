@@ -27,7 +27,7 @@ class Abelha
   end
 
   def trabalhe
-    while $gerenciadorTempo.current_time <= 600
+    while true # $gerenciadorTempo.current_time <= $duracao
       $monitor.abelha_request @id
       sleep @t
       $pote.adiciona_mel
